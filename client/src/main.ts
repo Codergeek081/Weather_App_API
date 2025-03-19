@@ -34,18 +34,18 @@ API Calls
 
 */
 
-const fetchWeather = async (cityName: string) => {
-  const response = await fetch('/api/weather/', {
+const fetchWeather = async (city: string) => {
+  const response = await fetch('http://localhost:3001/api/weather/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ cityName }),
+    body: JSON.stringify({ city }),
   });
 
   const weatherData = await response.json();
 
-  console.log('weatherData: ', weatherData);
+  // console.log('weatherData: ', weatherData);
 
   renderCurrentWeather(weatherData[0]);
   renderForecast(weatherData.slice(1));
@@ -77,8 +77,15 @@ Render Functions
 */
 
 const renderCurrentWeather = (currentWeather: any): void => {
-  const { city, date, icon, iconDescription, tempF, windSpeed, humidity } =
-    currentWeather;
+  console.log(currentWeather)
+  const { city, date, icon, iconDescription, tempF, windSpeed, humidity } = currentWeather;
+  // const city = currentWeather.city
+  // const date = (new Date(currentWeather.weather.dt * 1000)).toLocaleString()
+  // const icon = '04d'
+  // const iconDescription = 'description'
+  // const tempF = currentWeather.weather.main.temp
+  // const windSpeed = currentWeather.weather.wind.speed
+  // const humidity = currentWeather.weather.main.humidity
 
   // convert the following to typescript
   heading.textContent = `${city} (${date})`;
@@ -118,7 +125,10 @@ const renderForecast = (forecast: any): void => {
 };
 
 const renderForecastCard = (forecast: any) => {
+  console.log(forecast)
   const { date, icon, iconDescription, tempF, windSpeed, humidity } = forecast;
+
+  
 
   const { col, cardTitle, weatherIcon, tempEl, windEl, humidityEl } =
     createForecastCard();
